@@ -1,0 +1,57 @@
+{
+  "id": "starforum",
+  "slug": "starforum",
+  "name": "StarForum",
+  "subtitle": "A cross-platform Flutter client for Flarum communities",
+  "summary": "面向 Flarum 社区的跨平台论坛客户端。",
+  "description": "强调性能、桌面与移动端适配、本地缓存与 Material 3 体验，目标是提供更完整的原生论坛访问方案。",
+  "cover": "",
+  "logo": "logo.svg",
+  "themeColor": "#3B82F6",
+  "status": "development",
+  "year": "2026",
+  "platforms": [
+    "Android",
+    "iOS",
+    "Windows",
+    "macOS",
+    "Linux"
+  ],
+  "tags": [
+    "Flutter",
+    "Forum",
+    "Cross-platform",
+    "Flarum"
+  ],
+  "techStack": [
+    "Flutter",
+    "Dart",
+    "GetX",
+    "Dio",
+    "Drift",
+    "SQLite"
+  ],
+  "links": {
+    "github": "https://github.com/cubevlmu/StarForum"
+  },
+  "authors": [
+    {
+      "name": "Cubevlmu",
+      "role": "Developer"
+    }
+  ],
+  "highlights": [
+    "Flarum 跨平台客户端",
+    "桌面端分栏与状态保留",
+    "Material 3 个性化体验",
+    "本地缓存与内容渲染优化"
+  ],
+  "screenshots": [],
+  "metadata": {
+    "repository": "Public",
+    "startedAt": "",
+    "updatedAt": "2026-03"
+  },
+  "toc": true,
+  "featured": true
+}

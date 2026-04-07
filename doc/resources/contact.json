@@ -1,0 +1,43 @@
+{
+  "eyebrow": {
+    "en": "Contact",
+    "zh": "联系"
+  },
+  "title": {
+    "en": "Get in touch.",
+    "zh": "欢迎联系。"
+  },
+  "description": {
+    "en": "Use this section to list the contact methods you want visitors to use.",
+    "zh": "这里用于填写希望访客使用的联系方式。"
+  },
+  "methods": [
+    {
+      "label": {
+        "en": "Email",
+        "zh": "邮箱"
+      },
+      "value": "your-email@example.com",
+      "href": "mailto:your-email@example.com",
+      "icon": "envelope"
+    },
+    {
+      "label": {
+        "en": "GitHub",
+        "zh": "GitHub"
+      },
+      "value": "github.com/your-account",
+      "href": "https://github.com/your-account",
+      "icon": "github"
+    },
+    {
+      "label": {
+        "en": "Website",
+        "zh": "网站"
+      },
+      "value": "your-site.example.com",
+      "href": "https://your-site.example.com",
+      "icon": "pen-nib"
+    }
+  ]
+}

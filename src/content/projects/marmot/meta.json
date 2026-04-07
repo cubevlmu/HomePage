@@ -1,0 +1,50 @@
+{
+  "id": "marmot",
+  "slug": "marmot",
+  "name": "marmot",
+  "subtitle": "A modular QQ bot framework built on OneBot v11",
+  "summary": "基于 OneBot v11 的 QQ 群机器人框架与定制实现。",
+  "description": "强调模块化、调度、触发式动作与插件扩展能力，适合从脚本式机器人演进到可维护的框架化方案。",
+  "cover": "",
+  "logo": "logo.png",
+  "themeColor": "#F59E0B",
+  "status": "development",
+  "year": "2025",
+  "platforms": [
+    "Server",
+    "Bot"
+  ],
+  "tags": [
+    "Go",
+    "OneBot",
+    "QQ Bot",
+    "Automation"
+  ],
+  "techStack": [
+    "Go",
+    "OneBot v11"
+  ],
+  "links": {
+    "github": "https://github.com/cubevlmu/marmot"
+  },
+  "authors": [
+    {
+      "name": "Cubevlmu",
+      "role": "Developer"
+    }
+  ],
+  "highlights": [
+    "OneBot v11 协议基础",
+    "调度与定时任务支持",
+    "触发式机器人动作",
+    "插件式扩展结构"
+  ],
+  "screenshots": [],
+  "metadata": {
+    "repository": "Public",
+    "startedAt": "",
+    "updatedAt": "2025-08"
+  },
+  "toc": true,
+  "featured": false
+}

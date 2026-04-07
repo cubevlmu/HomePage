@@ -1,0 +1,44 @@
+{
+  "navItems": [
+    {
+      "label": {
+        "en": "Home",
+        "zh": "首页"
+      },
+      "to": "/",
+      "icon": "house"
+    },
+    {
+      "label": {
+        "en": "About",
+        "zh": "关于"
+      },
+      "to": "/about",
+      "icon": "user"
+    },
+    {
+      "label": {
+        "en": "Projects",
+        "zh": "项目"
+      },
+      "to": "/projects",
+      "icon": "folder-open"
+    },
+    {
+      "label": {
+        "en": "Contact",
+        "zh": "联系"
+      },
+      "to": "/contact",
+      "icon": "envelope"
+    }
+  ],
+  "blogButton": {
+    "label": {
+      "en": "External Link",
+      "zh": "外部链接"
+    },
+    "href": "https://your-site.example.com",
+    "icon": "pen-nib"
+  }
+}

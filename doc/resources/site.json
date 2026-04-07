@@ -1,0 +1,29 @@
+{
+  "title": {
+    "en": "Site Title",
+    "zh": "站点标题"
+  },
+  "description": {
+    "en": "A short site description used for metadata and general site identity.",
+    "zh": "一段用于元信息和整体站点定位的简短说明。"
+  },
+  "language": {
+    "en": "en-US",
+    "zh": "zh-CN"
+  },
+  "role": {
+    "en": "Role or Title",
+    "zh": "角色或头衔"
+  },
+  "profile": {
+    "login": "your-account",
+    "displayName": "Display Name",
+    "avatar": "/images/avatar.png",
+    "profileUrl": "https://example.com/profile",
+    "company": "Organization Name",
+    "bio": {
+      "en": "A short profile bio shown in the header or summary area.",
+      "zh": "显示在头部或摘要区域的简短简介。"
+    }
+  }
+}

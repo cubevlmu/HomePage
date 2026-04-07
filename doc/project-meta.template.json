@@ -1,0 +1,59 @@
+{
+  "id": "example-project",
+  "slug": "example-project",
+  "name": "Example Project",
+  "subtitle": "A short one-line subtitle for the project",
+  "summary": "A short summary used in cards and key detail areas.",
+  "description": "A slightly longer description used in the list and detail page.",
+  "cover": "",
+  "logo": "",
+  "themeColor": "#3B82F6",
+  "status": "development",
+  "year": "2026",
+  "platforms": [
+    "Web"
+  ],
+  "tags": [
+    "Vue",
+    "TypeScript"
+  ],
+  "techStack": [
+    "Vue 3",
+    "TypeScript",
+    "Vite"
+  ],
+  "links": {
+    "github": "",
+    "demo": "",
+    "blog": "",
+    "download": "",
+    "docs": ""
+  },
+  "authors": [
+    {
+      "name": "Your Name",
+      "role": "Developer"
+    }
+  ],
+  "highlights": [
+    "First highlight",
+    "Second highlight",
+    "Third highlight"
+  ],
+  "screenshots": [
+    {
+      "src": "",
+      "title": "Screen title",
+      "description": "What this screen shows"
+    }
+  ],
+  "metadata": {
+    "license": "",
+    "repository": "Public",
+    "release": "",
+    "startedAt": "",
+    "updatedAt": ""
+  },
+  "toc": true,
+  "featured": false
+}

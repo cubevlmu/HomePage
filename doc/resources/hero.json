@@ -1,0 +1,49 @@
+{
+  "eyebrow": {
+    "en": "Site Category",
+    "zh": "站点分类"
+  },
+  "title": {
+    "en": "Primary homepage headline.",
+    "zh": "首页主标题。"
+  },
+  "subtitle": {
+    "en": "A short supporting subtitle for the homepage.",
+    "zh": "首页的简短副标题。"
+  },
+  "description": {
+    "en": "Write a concise introduction here. This can describe your work, focus, product, studio, or any other site identity.",
+    "zh": "这里填写一段简短介绍，可以描述你的工作、方向、产品、工作室或其他站点定位。"
+  },
+  "actions": [
+    {
+      "label": {
+        "en": "View Projects",
+        "zh": "查看项目"
+      },
+      "href": "/projects",
+      "variant": "primary",
+      "icon": "arrow-right"
+    },
+    {
+      "label": {
+        "en": "External Link",
+        "zh": "外部链接"
+      },
+      "href": "https://your-site.example.com",
+      "variant": "secondary",
+      "icon": "pen-nib",
+      "external": true
+    },
+    {
+      "label": {
+        "en": "Profile",
+        "zh": "个人主页"
+      },
+      "href": "https://example.com/profile",
+      "variant": "ghost",
+      "icon": "github",
+      "external": true
+    }
+  ]
+}

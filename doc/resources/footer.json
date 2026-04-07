@@ -1,0 +1,14 @@
+{
+  "description": {
+    "en": "A short footer description for the site.",
+    "zh": "站点页脚的简短说明。"
+  },
+  "copyrightLabel": {
+    "en": "©2026 Site Name",
+    "zh": "©2026 站点名称"
+  },
+  "icpPlaceholder": {
+    "en": "ICP Filing: Optional",
+    "zh": "ICP备案：可选"
+  }
+}

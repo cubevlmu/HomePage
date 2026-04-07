@@ -1,0 +1,53 @@
+{
+  "id": "libjtool",
+  "slug": "libjtool",
+  "name": "libJTool",
+  "subtitle": "A lightweight C/C++ utility library for safer JNI development",
+  "summary": "帮助 JNI 开发更清晰、更安全的轻量级工具库。",
+  "description": "通过对象封装、回调支持、字段访问和日志模块减少 JNI 样板代码与常见陷阱。",
+  "cover": "",
+  "logo": "logo.jpg",
+  "themeColor": "#14B8A6",
+  "status": "development",
+  "year": "2025",
+  "platforms": [
+    "Android",
+    "C++",
+    "Library"
+  ],
+  "tags": [
+    "JNI",
+    "C++",
+    "Android",
+    "Utility Library"
+  ],
+  "techStack": [
+    "C",
+    "C++",
+    "CMake",
+    "JNI"
+  ],
+  "links": {
+    "github": "https://github.com/cubevlmu/libJTool"
+  },
+  "authors": [
+    {
+      "name": "Cubevlmu",
+      "role": "Developer"
+    }
+  ],
+  "highlights": [
+    "简化 JNI 调用与字段访问",
+    "支持 C++ 与 Java 回调",
+    "对象化封装 Java 交互",
+    "内置轻量日志模块"
+  ],
+  "screenshots": [],
+  "metadata": {
+    "repository": "Public",
+    "startedAt": "",
+    "updatedAt": "2025-08"
+  },
+  "toc": true,
+  "featured": false
+}

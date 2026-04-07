@@ -1,0 +1,50 @@
+{
+  "id": "quickbox",
+  "slug": "quickbox",
+  "name": "QuickBox",
+  "subtitle": "A fast Android launcher focused on search and one-tap launch",
+  "summary": "以速度为核心的 Android 应用搜索与启动器。",
+  "description": "聚焦实时搜索、一键启动和低打扰入口体验，适合高频快速打开应用的使用场景。",
+  "cover": "",
+  "logo": "logo.svg",
+  "themeColor": "#22C55E",
+  "status": "development",
+  "year": "2026",
+  "platforms": [
+    "Android",
+    "Mobile"
+  ],
+  "tags": [
+    "Android",
+    "Launcher",
+    "Productivity"
+  ],
+  "techStack": [
+    "Flutter",
+    "Dart",
+    "Kotlin"
+  ],
+  "links": {
+    "github": "https://github.com/cubevlmu/QuickBox"
+  },
+  "authors": [
+    {
+      "name": "Cubevlmu",
+      "role": "Developer"
+    }
+  ],
+  "highlights": [
+    "实时搜索已安装应用",
+    "一键启动并自动关闭启动器",
+    "Flutter 重构主分支",
+    "图标按可见范围分批加载"
+  ],
+  "screenshots": [],
+  "metadata": {
+    "repository": "Public",
+    "startedAt": "",
+    "updatedAt": "2026-03"
+  },
+  "toc": true,
+  "featured": true
+}

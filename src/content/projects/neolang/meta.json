@@ -1,0 +1,48 @@
+{
+  "id": "neolang",
+  "slug": "neolang",
+  "name": "Neolang",
+  "subtitle": "A high-performance programming language experiment",
+  "summary": "面向高性能方向的编程语言探索项目。",
+  "description": "围绕语言设计、编译实现与工程结构逐步展开，强调性能导向与可持续扩展的语言工程实践。",
+  "cover": "",
+  "logo": "",
+  "themeColor": "#8B5CF6",
+  "status": "experimental",
+  "year": "2026",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "tags": [
+    "Programming Language",
+    "Compiler",
+    "C++"
+  ],
+  "techStack": [
+    "C++",
+    "CMake"
+  ],
+  "links": {
+    "github": "https://github.com/cubevlmu/Neolang"
+  },
+  "authors": [
+    {
+      "name": "Cubevlmu",
+      "role": "Developer"
+    }
+  ],
+  "highlights": [
+    "高性能语言探索",
+    "以语言工程为核心",
+    "模块化工程结构",
+    "适合持续迭代实现"
+  ],
+  "screenshots": [],
+  "metadata": {
+    "repository": "Public",
+    "startedAt": "",
+    "updatedAt": "2026-03"
+  },
+  "toc": true,
+  "featured": true
+}

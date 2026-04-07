@@ -1,0 +1,264 @@
+{
+  "appHeader": {
+    "githubAriaLabel": {
+      "en": "GitHub profile",
+      "zh": "GitHub 主页"
+    },
+    "navAriaLabel": {
+      "en": "Main navigation",
+      "zh": "主导航"
+    },
+    "menuToggleLabel": {
+      "en": "Open menu",
+      "zh": "打开菜单"
+    },
+    "menuCloseLabel": {
+      "en": "Close menu",
+      "zh": "关闭菜单"
+    }
+  },
+  "appFooter": {
+    "languageSwitcherLabel": {
+      "en": "Language",
+      "zh": "语言切换"
+    },
+    "backToTopLabel": {
+      "en": "Back to top",
+      "zh": "回到顶部"
+    }
+  },
+  "projectCard": {
+    "detailLabel": {
+      "en": "View",
+      "zh": "查看"
+    },
+    "subtitleFallback": {
+      "en": "Project",
+      "zh": "项目"
+    }
+  },
+  "contactSection": {
+    "nameLabel": {
+      "en": "Name",
+      "zh": "名字"
+    },
+    "namePlaceholder": {
+      "en": "What should I call you?",
+      "zh": "怎么称呼你？"
+    },
+    "emailLabel": {
+      "en": "Email",
+      "zh": "邮箱"
+    },
+    "emailPlaceholder": {
+      "en": "name@example.com",
+      "zh": "name@example.com"
+    },
+    "messageLabel": {
+      "en": "Message",
+      "zh": "留言"
+    },
+    "messagePlaceholder": {
+      "en": "Tell me about your idea or project.",
+      "zh": "可以说说你的想法或者项目。"
+    },
+    "formButtonLabel": {
+      "en": "Send email",
+      "zh": "发送邮件"
+    },
+    "formHint": {
+      "en": "This will open your default mail client with the message filled in.",
+      "zh": "将使用填写好的内容打开你的默认邮件客户端。"
+    },
+    "nameRequired": {
+      "en": "Please enter your name.",
+      "zh": "请输入你的名字。"
+    },
+    "emailRequired": {
+      "en": "Please enter your email address.",
+      "zh": "请输入你的邮箱地址。"
+    },
+    "emailInvalid": {
+      "en": "Please enter a valid email address.",
+      "zh": "请输入有效的邮箱地址。"
+    },
+    "messageRequired": {
+      "en": "Please enter your message.",
+      "zh": "请输入留言内容。"
+    },
+    "recipientMissing": {
+      "en": "No contact email is configured yet.",
+      "zh": "暂未配置联系邮箱。"
+    }
+  },
+  "heroSection": {
+    "projectCountLabel": {
+      "en": "Projects",
+      "zh": "项目"
+    },
+    "focusLabel": {
+      "en": "Focus",
+      "zh": "关注"
+    },
+    "focusValueTitle": {
+      "en": "Projects first",
+      "zh": "以项目为主"
+    },
+    "focusValue": {
+      "en": "Engineering / UX / Maintenance",
+      "zh": "工程 / 体验 / 维护"
+    },
+    "goalLabel": {
+      "en": "Goal",
+      "zh": "目标"
+    },
+    "goalValue": {
+      "en": "Keep building and improving over time",
+      "zh": "持续构建和积累"
+    },
+    "focusPanelDescription": {
+      "en": "Projects as the core, with other information as support.",
+      "zh": "以项目为核心，其他内容作为补充。"
+    },
+    "structureLabel": {
+      "en": "Structure",
+      "zh": "结构"
+    },
+    "structureValue": {
+      "en": "Component-based",
+      "zh": "组件化"
+    },
+    "structureDescription": {
+      "en": "Built with reusable components, making it easy to expand over time.",
+      "zh": "基于组件构建，方便后续扩展。"
+    }
+  },
+  "projectDetailView": {
+    "detailEyebrow": {
+      "en": "Project",
+      "zh": "项目"
+    },
+    "overviewTitle": {
+      "en": "Overview",
+      "zh": "概览"
+    },
+    "highlightsTitle": {
+      "en": "Highlights",
+      "zh": "亮点"
+    },
+    "galleryTitle": {
+      "en": "Gallery",
+      "zh": "展示"
+    },
+    "contentTitle": {
+      "en": "Notes",
+      "zh": "说明"
+    },
+    "relatedTitle": {
+      "en": "Related",
+      "zh": "相关项目"
+    },
+    "projectListLabel": {
+      "en": "Projects",
+      "zh": "项目"
+    },
+    "backToHomeLabel": {
+      "en": "Home",
+      "zh": "首页"
+    },
+    "statusLabel": {
+      "en": "Status",
+      "zh": "状态"
+    },
+    "platformLabel": {
+      "en": "Platforms",
+      "zh": "平台"
+    },
+    "yearLabel": {
+      "en": "Year",
+      "zh": "年份"
+    },
+    "techStackLabel": {
+      "en": "Tech",
+      "zh": "技术"
+    },
+    "linksLabel": {
+      "en": "Links",
+      "zh": "链接"
+    },
+    "authorsLabel": {
+      "en": "Authors",
+      "zh": "作者"
+    },
+    "tocLabel": {
+      "en": "Contents",
+      "zh": "目录"
+    },
+    "metadataLabel": {
+      "en": "Meta",
+      "zh": "信息"
+    },
+    "licenseLabel": {
+      "en": "License",
+      "zh": "许可证"
+    },
+    "repositoryLabel": {
+      "en": "Repository",
+      "zh": "仓库"
+    },
+    "releaseLabel": {
+      "en": "Release",
+      "zh": "版本"
+    },
+    "startedAtLabel": {
+      "en": "Started",
+      "zh": "开始"
+    },
+    "updatedAtLabel": {
+      "en": "Updated",
+      "zh": "更新"
+    },
+    "noScreenshotsLabel": {
+      "en": "Screenshots coming soon.",
+      "zh": "截图后续补充。"
+    },
+    "noTocLabel": {
+      "en": "No contents.",
+      "zh": "暂无目录。"
+    },
+    "backToProjectsLabel": {
+      "en": "Back",
+      "zh": "返回项目"
+    },
+    "projectMissingTitle": {
+      "en": "Not Found",
+      "zh": "未找到项目"
+    },
+    "projectMissingDescription": {
+      "en": "No matching project found.",
+      "zh": "没有找到对应项目。"
+    }
+  },
+  "projectLinks": {
+    "github": {
+      "en": "GitHub",
+      "zh": "GitHub"
+    },
+    "demo": {
+      "en": "Demo",
+      "zh": "演示"
+    },
+    "blog": {
+      "en": "Blog",
+      "zh": "博客"
+    },
+    "download": {
+      "en": "Download",
+      "zh": "下载"
+    },
+    "docs": {
+      "en": "Docs",
+      "zh": "文档"
+    }
+  }
+}

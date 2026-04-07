@@ -1,0 +1,79 @@
+{
+  "eyebrow": {
+    "en": "About",
+    "zh": "关于"
+  },
+  "title": {
+    "en": "",
+    "zh": ""
+  },
+  "description": {
+    "en": "",
+    "zh": ""
+  },
+  "story": [
+    {
+      "en": "",
+      "zh": ""
+    },
+    {
+      "en": "",
+      "zh": ""
+    }
+  ],
+  "cards": [
+    {
+      "title": {
+        "en": "Focus",
+        "zh": "方向"
+      },
+      "value": {
+        "en": "",
+        "zh": ""
+      },
+      "detail": {
+        "en": "",
+        "zh": ""
+      }
+    },
+    {
+      "title": {
+        "en": "Main Work",
+        "zh": "主要内容"
+      },
+      "value": {
+        "en": "",
+        "zh": ""
+      },
+      "detail": {
+        "en": "",
+        "zh": ""
+      }
+    },
+    {
+      "title": {
+        "en": "Languages",
+        "zh": "语言"
+      },
+      "value": "C++ / C / Dart / Go / C# / Java / TS",
+      "detail": {
+        "en": "Used across different projects.",
+        "zh": "在不同项目中都有实践。"
+      }
+    },
+    {
+      "title": {
+        "en": "Goal",
+        "zh": "目标"
+      },
+      "value": {
+        "en": "Keep learning, keep building",
+        "zh": "持续学习，持续实践"
+      },
+      "detail": {
+        "en": "Step by step, build a deeper understanding of software.",
+        "zh": "一步一步加深对软件系统的理解。"
+      }
+    }
+  ]
+}

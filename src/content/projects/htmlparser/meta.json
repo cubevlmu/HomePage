@@ -1,0 +1,50 @@
+{
+  "id": "htmlparser",
+  "slug": "htmlparser",
+  "name": "HTMLParser",
+  "subtitle": "A fast and efficient HTML parsing library for C++",
+  "summary": "轻量快速的 C++ HTML 解析库。",
+  "description": "面向网页抓取、文档转换等场景，强调性能、灵活性与易集成能力。",
+  "cover": "",
+  "logo": "",
+  "themeColor": "#EF4444",
+  "status": "development",
+  "year": "2025",
+  "platforms": [
+    "C++",
+    "Library"
+  ],
+  "tags": [
+    "C++",
+    "HTML",
+    "Parser",
+    "Library"
+  ],
+  "techStack": [
+    "C++",
+    "CMake"
+  ],
+  "links": {
+    "github": "https://github.com/cubevlmu/HTMLParser"
+  },
+  "authors": [
+    {
+      "name": "Cubevlmu",
+      "role": "Developer"
+    }
+  ],
+  "highlights": [
+    "高性能 HTML 解析",
+    "适合网页抓取与转换场景",
+    "轻量灵活的 C++ 库",
+    "已规划错误处理与测试完善"
+  ],
+  "screenshots": [],
+  "metadata": {
+    "repository": "Public",
+    "startedAt": "",
+    "updatedAt": "2025-08"
+  },
+  "toc": true,
+  "featured": false
+}
