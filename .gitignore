@@ -5,6 +5,15 @@ node_modules/
 dist/
 dist-ssr/
 coverage/
+.vite/
+*.tsbuildinfo
+.codegraph
+.idea
+developments
+dist
+node_modules
+package-lock.json
+public/data
 
 # Logs
 logs/
@@ -24,6 +33,9 @@ lerna-debug.log*
 # Local workspace files
 developments/
 .cache/
+.codegraph/
+.agents/
+.codex/
 
 # Editor directories and files
 .vscode/*
@@ -36,3 +48,18 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Local reports and temporary files
+stats.html
+*.tmp
+*.bak
+
+# Removed legacy content layout
+src/content/
+src/resources/
+doc/resources/
+doc/data-driven-projects.md
+doc/project-content.template.md
+doc/project-meta.template.json
+public/images/
+public/icons.svg

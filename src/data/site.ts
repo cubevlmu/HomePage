@@ -1,19 +1,21 @@
 import { computed } from 'vue'
 import type { SiteConfig } from '../types/site'
-import siteResource from '../resources/site.json'
-import { localizeText } from './localize'
+import { resolvePublicAsset } from '../utils/assets'
+import { requireBaseData, requireLocaleData } from './runtime'
 
-export const siteConfig = computed<SiteConfig>(() => ({
-  title: localizeText(siteResource.title),
-  description: localizeText(siteResource.description),
-  language: localizeText(siteResource.language),
-  role: localizeText(siteResource.role),
-  profile: {
-    login: siteResource.profile.login,
-    displayName: siteResource.profile.displayName,
-    avatar: siteResource.profile.avatar,
-    profileUrl: siteResource.profile.profileUrl,
-    company: siteResource.profile.company,
-    bio: localizeText(siteResource.profile.bio),
-  },
-}))
+export const siteConfig = computed<SiteConfig>(() => {
+  const base = requireBaseData()
+  const localized = requireLocaleData()
+
+  return {
+    title: localized.site.title,
+    description: localized.site.description,
+    language: localized.site.language,
+    role: localized.site.role,
+    profile: {
+      ...base.profile,
+      avatar: resolvePublicAsset(base.profile.avatar),
+      bio: localized.site.bio,
+    },
+  }
+})

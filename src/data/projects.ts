@@ -1,84 +1,41 @@
 import { computed } from 'vue'
-import type { Project, ProjectCollection } from '../types/project'
-import projectsResource from '../resources/projects.json'
-import { localizeText } from './localize'
-
-const projectMetaModules = import.meta.glob('../content/projects/*/meta.json', {
-  eager: true,
-  import: 'default',
-}) as Record<string, Omit<Project, 'content'>>
-
-const projectContentModules = import.meta.glob('../content/projects/*/content.md', {
-  eager: true,
-  query: '?raw',
-  import: 'default',
-}) as Record<string, string>
-
-const projectAssetModules = import.meta.glob('../content/projects/*/*.{png,jpg,jpeg,webp,svg,avif}', {
-  eager: true,
-  import: 'default',
-}) as Record<string, string>
-
-const getSlugFromPath = (path: string) => path.split('/').at(-2) ?? ''
-
-const resolveProjectAsset = (slug: string, assetPath?: string) => {
-  if (!assetPath) {
-    return ''
-  }
-
-  if (/^(https?:)?\/\//.test(assetPath) || assetPath.startsWith('/')) {
-    return assetPath
-  }
-
-  const normalizedPath = assetPath.replace(/^\.\//, '')
-  const assetModulePath = `../content/projects/${slug}/${normalizedPath}`
-
-  return projectAssetModules[assetModulePath] ?? assetPath
-}
-
-const resolveDefaultSnapshot = (slug: string) => {
-  const snapshotNames = ['snapshot.png', 'snapshot.jpg', 'snapshot.jpeg', 'snapshot.webp', 'snapshot.svg', 'snapshot.avif']
-
-  for (const snapshotName of snapshotNames) {
-    const resolvedAsset = resolveProjectAsset(slug, snapshotName)
-
-    if (resolvedAsset !== snapshotName) {
-      return resolvedAsset
-    }
-  }
-
-  return ''
-}
-
-const projectEntries = Object.entries(projectMetaModules)
-  .map(([path, meta]) => {
-    const slug = getSlugFromPath(path)
-    const contentPath = `../content/projects/${slug}/content.md`
-    const content = projectContentModules[contentPath] ?? ''
-    const screenshots = meta.screenshots.map((shot) => ({
-      ...shot,
-      src: resolveProjectAsset(slug, shot.src),
-    }))
-    const defaultSnapshot = resolveDefaultSnapshot(slug)
-
-    return {
-      ...meta,
-      cover: resolveProjectAsset(slug, meta.cover) || defaultSnapshot,
-      logo: resolveProjectAsset(slug, meta.logo),
-      screenshots,
-      content,
-    } satisfies Project
-  })
-  .sort((left, right) => Number(right.featured ?? false) - Number(left.featured ?? false) || right.year.localeCompare(left.year))
+import type { ProjectCollection } from '../types/project'
+import { projects, requireLocaleData } from './runtime'
 
 export const projectCollection = computed<ProjectCollection>(() => ({
-  eyebrow: localizeText(projectsResource.eyebrow),
-  title: localizeText(projectsResource.title),
-  description: localizeText(projectsResource.description),
-  items: projectEntries,
+  ...requireLocaleData().projects,
+  items: [...projects.value],
 }))
 
-export const getProjectBySlug = (slug: string) => projectEntries.find((project) => project.slug === slug)
+export const getProjectBySlug = (slug: string) => projects.value.find((project) => project.slug === slug)
 
-export const getRelatedProjects = (slug: string, limit = 3) =>
-  projectEntries.filter((project) => project.slug !== slug).slice(0, limit)
+const countSharedValues = (left: string[], right: string[]) => {
+  const rightValues = new Set(right.map((value) => value.toLowerCase()))
+  return left.reduce((count, value) => count + Number(rightValues.has(value.toLowerCase())), 0)
+}
+
+export const getRelatedProjects = (slug: string, limit = 3) => {
+  const currentProject = getProjectBySlug(slug)
+
+  if (!currentProject) {
+    return []
+  }
+
+  return projects.value
+    .filter((project) => project.slug !== slug)
+    .map((project) => ({
+      project,
+      score:
+        countSharedValues(currentProject.tags, project.tags) * 3 +
+        countSharedValues(currentProject.techStack, project.techStack) * 2 +
+        countSharedValues(currentProject.platforms, project.platforms),
+    }))
+    .sort(
+      (left, right) =>
+        right.score - left.score ||
+        Number(right.project.featured ?? false) - Number(left.project.featured ?? false) ||
+        right.project.year.localeCompare(left.project.year),
+    )
+    .slice(0, limit)
+    .map(({ project }) => project)
+}

@@ -1,271 +1,173 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import AppLink from '../components/common/AppLink.vue'
-import MarkdownRenderer from '../components/common/MarkdownRenderer.vue'
+import FaIcon from '../components/common/FaIcon.vue'
+import ProjectLogo from '../components/common/ProjectLogo.vue'
+import SectionEyebrow from '../components/common/SectionEyebrow.vue'
+import TagList from '../components/common/TagList.vue'
 import PageLayout from '../components/layout/PageLayout.vue'
-import { localizeText, useLocalizedText } from '../data/localize'
+import ProjectInfoPanel from '../components/project/ProjectInfoPanel.vue'
+import ProjectReadingSection from '../components/project/ProjectReadingSection.vue'
+import { uiConfig, useUiSection } from '../data/localize'
+import { getProjectFields, getProjectLinks } from '../data/project-presentation'
 import { getProjectBySlug, getRelatedProjects } from '../data/projects'
-import uiResource from '../resources/ui.json'
-import type { ProjectLinkKey } from '../types/project'
+import { displayConfig } from '../data/runtime'
 import { extractToc } from '../utils/markdown'
 
 const route = useRoute()
 const project = computed(() => getProjectBySlug(route.params.slug as string))
 const relatedProjects = computed(() => (project.value ? getRelatedProjects(project.value.slug) : []))
 const tocItems = computed(() => (project.value?.toc ? extractToc(project.value.content) : []))
-
-const backToProjectsLabel = useLocalizedText(uiResource.projectDetailView.backToProjectsLabel)
-const backToHomeLabel = useLocalizedText(uiResource.projectDetailView.backToHomeLabel)
-const projectListLabel = useLocalizedText(uiResource.projectDetailView.projectListLabel)
-const statusLabel = useLocalizedText(uiResource.projectDetailView.statusLabel)
-const platformLabel = useLocalizedText(uiResource.projectDetailView.platformLabel)
-const yearLabel = useLocalizedText(uiResource.projectDetailView.yearLabel)
-const techStackLabel = useLocalizedText(uiResource.projectDetailView.techStackLabel)
-const linksLabel = useLocalizedText(uiResource.projectDetailView.linksLabel)
-const authorsLabel = useLocalizedText(uiResource.projectDetailView.authorsLabel)
-const overviewTitle = useLocalizedText(uiResource.projectDetailView.overviewTitle)
-const highlightsTitle = useLocalizedText(uiResource.projectDetailView.highlightsTitle)
-const galleryTitle = useLocalizedText(uiResource.projectDetailView.galleryTitle)
-const contentTitle = useLocalizedText(uiResource.projectDetailView.contentTitle)
-const relatedTitle = useLocalizedText(uiResource.projectDetailView.relatedTitle)
-const tocLabel = useLocalizedText(uiResource.projectDetailView.tocLabel)
-const metadataLabel = useLocalizedText(uiResource.projectDetailView.metadataLabel)
-const licenseLabel = useLocalizedText(uiResource.projectDetailView.licenseLabel)
-const repositoryLabel = useLocalizedText(uiResource.projectDetailView.repositoryLabel)
-const releaseLabel = useLocalizedText(uiResource.projectDetailView.releaseLabel)
-const startedAtLabel = useLocalizedText(uiResource.projectDetailView.startedAtLabel)
-const updatedAtLabel = useLocalizedText(uiResource.projectDetailView.updatedAtLabel)
-const noScreenshotsLabel = useLocalizedText(uiResource.projectDetailView.noScreenshotsLabel)
-const noTocLabel = useLocalizedText(uiResource.projectDetailView.noTocLabel)
-const projectMissingTitle = useLocalizedText(uiResource.projectDetailView.projectMissingTitle)
-const projectMissingDescription = useLocalizedText(uiResource.projectDetailView.projectMissingDescription)
-
-const linkLabelMap = {
-  github: uiResource.projectLinks.github,
-  demo: uiResource.projectLinks.demo,
-  blog: uiResource.projectLinks.blog,
-  download: uiResource.projectLinks.download,
-  docs: uiResource.projectLinks.docs,
-} satisfies Record<ProjectLinkKey, { en: string; zh: string }>
-
-const projectLinks = computed(() => {
-  if (!project.value) {
-    return []
-  }
-
-  return Object.entries(project.value.links)
-    .filter((entry): entry is [ProjectLinkKey, string] => Boolean(entry[1]))
-    .map(([key, href]) => ({
-      key,
-      href,
-      label: localizeText(linkLabelMap[key]),
-      external: href.startsWith('http'),
-    }))
-})
-
+const ui = useUiSection('projectDetailView')
+const projectLinks = computed(() => project.value ? getProjectLinks(project.value, uiConfig.value.projectLinks) : [])
 const overviewItems = computed(() =>
-  project.value
-    ? [
-        { label: statusLabel.value, value: project.value.status },
-        { label: yearLabel.value, value: project.value.year },
-        { label: platformLabel.value, value: project.value.platforms.join(' / ') },
-        { label: releaseLabel.value, value: project.value.metadata.release || '-' },
-        { label: licenseLabel.value, value: project.value.metadata.license || '-' },
-        { label: repositoryLabel.value, value: project.value.metadata.repository || '-' },
-      ]
-    : [],
+  project.value ? getProjectFields(project.value, displayConfig.value.projectOverview, ui.value, true) : [],
 )
-
 const metadataItems = computed(() =>
-  project.value
-    ? [
-        { label: licenseLabel.value, value: project.value.metadata.license },
-        { label: repositoryLabel.value, value: project.value.metadata.repository },
-        { label: releaseLabel.value, value: project.value.metadata.release },
-        { label: startedAtLabel.value, value: project.value.metadata.startedAt },
-        { label: updatedAtLabel.value, value: project.value.metadata.updatedAt },
-      ].filter((item): item is { label: string; value: string } => Boolean(item.value))
-    : [],
+  project.value ? getProjectFields(project.value, displayConfig.value.projectMetadata, ui.value) : [],
 )
+const infoOpen = ref(false)
+
+watch(infoOpen, (open) => document.body.classList.toggle('menu-open', open))
+watch(() => route.fullPath, () => { infoOpen.value = false })
+onBeforeUnmount(() => document.body.classList.remove('menu-open'))
 </script>
 
 <template>
   <PageLayout>
-    <section v-if="project" class="content-section project-detail-shell">
-      <div class="project-breadcrumbs">
-        <div class="project-breadcrumbs__path">
-          <AppLink to="/" class="project-breadcrumbs__link">{{ backToHomeLabel }}</AppLink>
+    <template #header-start>
+      <button
+        v-if="project"
+        class="grid size-9 place-items-center rounded-lg text-slate-300 transition hover:bg-surface-elevated hover:text-white lg:hidden"
+        type="button"
+        :aria-label="ui.infoMenuLabel"
+        :aria-expanded="infoOpen"
+        @click="infoOpen = true"
+      >
+        <FaIcon name="circle-info" />
+      </button>
+    </template>
+
+    <section v-if="project" class="space-y-6 py-2 sm:space-y-7">
+      <div class="flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-wrap items-center gap-2">
+          <AppLink to="/" class="transition hover:text-white">{{ ui.backToHomeLabel }}</AppLink>
           <span>/</span>
-          <AppLink to="/projects" class="project-breadcrumbs__link">{{ projectListLabel }}</AppLink>
+          <AppLink to="/#projects" class="transition hover:text-white">{{ ui.projectListLabel }}</AppLink>
           <span>/</span>
-          <span>{{ project.name }}</span>
+          <span class="text-slate-300">{{ project.name }}</span>
         </div>
-        <div class="project-breadcrumbs__actions">
-          <AppLink to="/projects" class="project-breadcrumbs__link">{{ backToProjectsLabel }}</AppLink>
+        <div class="hidden flex-wrap gap-4 sm:flex">
+          <AppLink to="/#projects" class="transition hover:text-white">{{ ui.backToProjectsLabel }}</AppLink>
           <AppLink
             v-for="link in projectLinks.slice(0, 2)"
             :key="link.key"
             :to="link.href"
             :external="link.external"
-            class="project-breadcrumbs__link"
+            class="transition hover:text-white"
           >
             {{ link.label }}
           </AppLink>
         </div>
       </div>
 
-      <section class="project-hero" :style="{ '--project-accent': project.themeColor || 'var(--primary)' }">
-        <div class="project-hero__copy">
-          <div class="project-hero__identity">
-            <div v-if="project.logo" class="project-hero__logo-wrap">
-              <img class="project-hero__logo" :src="project.logo" :alt="`${project.name} logo`" />
-            </div>
-            <div v-else class="project-hero__logo-wrap project-hero__logo-wrap--fallback">
-              <span>{{ project.name.slice(0, 2) }}</span>
-            </div>
-            <div>
-              <span class="status-pill">{{ project.status }}</span>
-              <h1 class="project-hero__title">{{ project.name }}</h1>
-              <p class="project-hero__subtitle">{{ project.subtitle }}</p>
+      <section class="grid gap-5 overflow-hidden rounded-[1.75rem] border border-[color:var(--project-accent)]/40 bg-surface/70 p-5 shadow-panel backdrop-blur-sm lg:grid-cols-[1.15fr_0.85fr] lg:p-6" :style="{ '--project-accent': project.themeColor || 'var(--color-brand)' }">
+        <div>
+          <div class="flex items-center gap-3 sm:gap-5">
+            <ProjectLogo :project="project" size="hero" />
+            <div class="min-w-0">
+              <span class="inline-flex rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 font-mono text-xs text-emerald-300">{{ project.status }}</span>
+              <h1 class="mt-2 font-display text-2xl font-bold tracking-tight text-white sm:mt-3 sm:text-5xl">{{ project.name }}</h1>
+              <p class="mt-2 text-sm text-slate-400 sm:text-base">{{ project.subtitle }}</p>
             </div>
           </div>
-          <p class="project-hero__summary">{{ project.summary }}</p>
-          <p class="project-hero__description">{{ project.description }}</p>
-          <div class="tag-row">
-            <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
-          </div>
-          <div class="project-hero__actions">
-            <AppLink v-for="link in projectLinks" :key="link.key" :to="link.href" :external="link.external" class="button button--primary">
+          <p class="mt-5 text-base leading-7 text-slate-100 sm:text-lg">{{ project.summary }}</p>
+          <p class="mt-2 text-sm leading-6 text-slate-400">{{ project.description }}</p>
+          <TagList class="mt-3" :items="project.tags" />
+          <div class="mt-4 flex flex-wrap gap-2.5">
+            <AppLink v-for="link in projectLinks" :key="link.key" :to="link.href" :external="link.external" class="rounded-xl bg-brand px-3 py-2 text-xs font-semibold text-white transition hover:bg-indigo-500 sm:px-4 sm:py-2.5 sm:text-sm">
               {{ link.label }}
             </AppLink>
           </div>
         </div>
-        <div class="project-hero__visual">
-          <img v-if="project.cover" class="project-hero__cover" :src="project.cover" :alt="`${project.name} cover`" />
-          <div v-else class="project-hero__cover project-hero__cover--fallback">
-            <strong>{{ project.name }}</strong>
-            <span>{{ project.subtitle }}</span>
+        <div class="aspect-video overflow-hidden rounded-2xl border border-slate-700 bg-slate-950/70">
+          <img v-if="project.cover" class="size-full object-cover" :src="project.cover" :alt="project.name" />
+          <div v-else class="grid size-full place-content-center gap-3 bg-gradient-to-br from-brand/25 via-slate-950 to-accent/20 p-6 text-center">
+            <strong class="font-display text-3xl text-white">{{ project.name }}</strong>
+            <span class="text-sm text-slate-400">{{ project.subtitle }}</span>
           </div>
         </div>
       </section>
 
-      <section class="project-overview">
-        <div class="section-heading">
-          <p class="eyebrow">{{ overviewTitle }}</p>
-        </div>
-        <div class="project-overview__grid">
-          <article v-for="item in overviewItems" :key="item.label" class="project-overview__card">
-            <span class="info-card__label">{{ item.label }}</span>
-            <strong>{{ item.value }}</strong>
+      <section v-if="overviewItems.length">
+        <SectionEyebrow>{{ ui.overviewTitle }}</SectionEyebrow>
+        <div class="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          <article v-for="item in overviewItems" :key="item.id" class="rounded-xl border border-slate-800 bg-surface/50 px-3 py-2.5">
+            <span class="text-xs text-slate-500">{{ item.label }}</span>
+            <strong class="mt-1 block truncate text-sm text-slate-100" :title="item.value">{{ item.value }}</strong>
           </article>
         </div>
       </section>
 
-      <section class="project-highlights">
-        <div class="section-heading">
-          <p class="eyebrow">{{ highlightsTitle }}</p>
-        </div>
-        <div class="project-highlights__grid">
-          <article v-for="highlight in project.highlights" :key="highlight" class="project-highlight-card">
-            <span class="project-highlight-card__marker"></span>
-            <p>{{ highlight }}</p>
-          </article>
-        </div>
-      </section>
+      <ProjectReadingSection
+        :project="project"
+        :metadata="metadataItems"
+        :links="projectLinks"
+        :toc="tocItems"
+        :ui="ui"
+      />
 
-      <section class="project-gallery">
-        <div class="section-heading">
-          <p class="eyebrow">{{ galleryTitle }}</p>
-        </div>
-        <div v-if="project.screenshots.length" class="project-gallery__grid">
-          <article v-for="shot in project.screenshots" :key="`${shot.title}-${shot.description}`" class="project-gallery__card">
-            <img v-if="shot.src" :src="shot.src" :alt="shot.title" class="project-gallery__image" />
-            <div v-else class="project-gallery__image project-gallery__image--fallback">
+      <section v-if="project.screenshots.length">
+        <SectionEyebrow>{{ ui.galleryTitle }}</SectionEyebrow>
+        <div class="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          <article v-for="shot in project.screenshots" :key="`${shot.title}-${shot.description}`" class="overflow-hidden rounded-2xl border border-slate-800 bg-surface/60 p-3">
+            <img v-if="shot.src" :src="shot.src" :alt="shot.title" class="aspect-video w-full rounded-xl object-cover" />
+            <div v-else class="grid aspect-video place-items-center rounded-xl bg-surface-elevated text-slate-500">
               <span>{{ shot.title }}</span>
             </div>
-            <strong>{{ shot.title }}</strong>
-            <p>{{ shot.description }}</p>
+            <strong class="mt-3 block text-sm text-white">{{ shot.title }}</strong>
+            <p class="mt-1 line-clamp-2 text-xs leading-5 text-slate-400">{{ shot.description }}</p>
           </article>
         </div>
-        <p v-else class="project-gallery__empty">{{ noScreenshotsLabel }}</p>
       </section>
 
-      <section class="project-reading">
-        <div class="project-reading__main">
-          <div class="section-heading">
-            <p class="eyebrow">{{ contentTitle }}</p>
-          </div>
-          <article class="project-reading__article">
-            <MarkdownRenderer :content="project.content" />
-          </article>
-        </div>
-        <aside class="project-reading__sidebar">
-          <section class="project-sidecard">
-            <p class="info-card__label">{{ metadataLabel }}</p>
-            <dl class="project-sidecard__list">
-              <div v-for="item in metadataItems" :key="item.label">
-                <dt>{{ item.label }}</dt>
-                <dd>{{ item.value }}</dd>
-              </div>
-            </dl>
-          </section>
-          <section class="project-sidecard">
-            <p class="info-card__label">{{ authorsLabel }}</p>
-            <div class="project-authors">
-              <div v-for="author in project.authors" :key="author.name" class="project-author">
-                <strong>{{ author.name }}</strong>
-                <span>{{ author.role }}</span>
-              </div>
-            </div>
-          </section>
-          <section class="project-sidecard">
-            <p class="info-card__label">{{ techStackLabel }}</p>
-            <div class="tag-row">
-              <span v-for="item in project.techStack" :key="item" class="tag">{{ item }}</span>
-            </div>
-          </section>
-          <section class="project-sidecard">
-            <p class="info-card__label">{{ linksLabel }}</p>
-            <div class="project-sidecard__links">
-              <AppLink v-for="link in projectLinks" :key="link.key" :to="link.href" :external="link.external" class="project-sidecard__link">
-                {{ link.label }}
-              </AppLink>
-            </div>
-          </section>
-          <section class="project-sidecard">
-            <p class="info-card__label">{{ tocLabel }}</p>
-            <nav v-if="tocItems.length" class="project-toc">
-              <a v-for="item in tocItems" :key="item.id" :href="`#${item.id}`" class="project-toc__link" :class="`project-toc__link--level-${item.level}`">
-                {{ item.text }}
-              </a>
-            </nav>
-            <p v-else class="project-toc__empty">{{ noTocLabel }}</p>
-          </section>
-        </aside>
-      </section>
-
-      <section class="project-related">
-        <div class="section-heading">
-          <p class="eyebrow">{{ relatedTitle }}</p>
-        </div>
-        <div class="project-related__grid">
-          <AppLink v-for="item in relatedProjects" :key="item.slug" :to="`/projects/${item.slug}`" class="project-related__card">
-            <strong>{{ item.name }}</strong>
-            <span>{{ item.subtitle }}</span>
-            <p>{{ item.summary }}</p>
+      <section>
+        <SectionEyebrow>{{ ui.relatedTitle }}</SectionEyebrow>
+        <div class="mt-3 grid gap-3 sm:grid-cols-2 md:mt-4 lg:grid-cols-3">
+          <AppLink v-for="item in relatedProjects" :key="item.slug" :to="`/p/${item.slug}`" class="group rounded-2xl border border-slate-800 bg-surface/55 p-4 transition hover:-translate-y-0.5 hover:border-brand/60">
+            <strong class="block font-display text-lg text-white transition group-hover:text-brand-light">{{ item.name }}</strong>
+            <span class="mt-1 block text-xs text-slate-500">{{ item.subtitle }}</span>
+            <p class="mt-3 line-clamp-2 text-sm leading-6 text-slate-400">{{ item.summary }}</p>
           </AppLink>
         </div>
       </section>
     </section>
 
-    <section v-else class="content-section project-detail-shell">
-      <div class="section-heading">
-        <p class="eyebrow">{{ projectMissingTitle }}</p>
-        <h2>{{ projectMissingTitle }}</h2>
-        <p>{{ projectMissingDescription }}</p>
+    <section v-else class="mx-auto max-w-2xl py-20 text-center">
+      <div>
+        <p class="font-mono text-xs font-semibold tracking-[0.2em] text-brand-light uppercase">404</p>
+        <h2 class="mt-4 font-display text-4xl font-bold text-white">{{ ui.projectMissingTitle }}</h2>
+        <p class="mt-4 leading-7 text-slate-400">{{ ui.projectMissingDescription }}</p>
       </div>
-      <AppLink to="/projects" class="button button--primary">{{ backToProjectsLabel }}</AppLink>
+      <AppLink to="/#projects" class="mt-8 inline-flex rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500">{{ ui.backToProjectsLabel }}</AppLink>
     </section>
+
+    <Teleport to="body">
+      <Transition name="nav-backdrop">
+        <button v-if="infoOpen" class="fixed inset-0 z-50 bg-slate-950/60" type="button" :aria-label="ui.infoMenuLabel" @click="infoOpen = false" />
+      </Transition>
+      <Transition name="project-info-drawer">
+        <aside v-if="project && infoOpen" class="fixed inset-y-0 left-0 z-[60] w-[min(21rem,90vw)] overflow-y-auto border-r border-slate-700 bg-surface p-4 shadow-2xl" :aria-label="ui.infoMenuLabel" aria-modal="true" role="dialog">
+          <div class="mb-4 flex items-center justify-between border-b border-slate-800 pb-3 pt-[max(0.25rem,env(safe-area-inset-top))]">
+            <strong class="font-display text-white">{{ ui.infoMenuLabel }}</strong>
+            <button class="grid size-9 place-items-center rounded-lg text-slate-300 transition hover:bg-surface-elevated hover:text-white" type="button" :aria-label="ui.closeInfoMenuLabel" @click="infoOpen = false">
+              <FaIcon name="xmark" />
+            </button>
+          </div>
+          <ProjectInfoPanel :project="project" :metadata="metadataItems" :links="projectLinks" :toc="tocItems" :ui="ui" @navigate="infoOpen = false" />
+        </aside>
+      </Transition>
+    </Teleport>
   </PageLayout>
 </template>

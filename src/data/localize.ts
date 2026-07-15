@@ -1,10 +1,8 @@
 import { computed } from 'vue'
-import { locale } from '../i18n'
-import type { LocalizedText } from '../types/localized'
+import type { UiConfig } from '../types/runtime-data'
+import { requireLocaleData } from './runtime'
 
-type MaybeLocalized = string | LocalizedText
+export const useUiSection = <T extends keyof UiConfig>(section: T) =>
+  computed(() => requireLocaleData().ui[section])
 
-export const localizeText = (value: MaybeLocalized) =>
-  typeof value === 'string' ? value : value[locale.value]
-
-export const useLocalizedText = (value: MaybeLocalized) => computed(() => localizeText(value))
+export const uiConfig = computed(() => requireLocaleData().ui)

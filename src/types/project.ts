@@ -38,12 +38,12 @@ export type Project = {
   techStack: string[]
   links: ProjectLinks
   authors: ProjectAuthor[]
-  highlights: string[]
   screenshots: ProjectScreenshot[]
   metadata: ProjectMetadata
   toc?: boolean
   featured?: boolean
   content: string
+  contentBase: string
 }
 
 export type ProjectCollection = {

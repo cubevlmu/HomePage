@@ -14,7 +14,12 @@ withDefaults(
 </script>
 
 <template>
-  <component :is="as" class="base-card" :class="className" :href="href">
+  <component
+    :is="as"
+    class="rounded-2xl border border-slate-700/60 bg-surface/70 shadow-panel backdrop-blur-sm"
+    :class="className"
+    :href="href"
+  >
     <slot />
   </component>
 </template>

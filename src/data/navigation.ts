@@ -1,17 +1,20 @@
 import { computed } from 'vue'
 import type { NavigationConfig } from '../types/navigation'
-import navigationResource from '../resources/navigation.json'
-import { localizeText } from './localize'
+import { localizedManifestLinks, requireLocaleData } from './runtime'
 
-export const navigationConfig = computed<NavigationConfig>(() => ({
-  navItems: navigationResource.navItems.map((item) => ({
-    label: localizeText(item.label),
-    to: item.to,
-    icon: item.icon,
-  })),
-  blogButton: {
-    label: localizeText(navigationResource.blogButton.label),
-    href: navigationResource.blogButton.href,
-    icon: navigationResource.blogButton.icon,
-  },
-}))
+export const navigationConfig = computed<NavigationConfig>(() => {
+  const navigation = requireLocaleData().navigation
+  const primaryLink = localizedManifestLinks.value.find((link) => link.id === 'blog')
+
+  return {
+    ...navigation,
+    blogButton: primaryLink
+      ? {
+          label: primaryLink.label,
+          href: primaryLink.href,
+          icon: primaryLink.icon,
+          external: primaryLink.external,
+        }
+      : navigation.blogButton,
+  }
+})

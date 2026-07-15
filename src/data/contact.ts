@@ -1,16 +1,15 @@
 import { computed } from 'vue'
 import type { ContactConfig } from '../types/contact'
-import contactResource from '../resources/contact.json'
-import { localizeText } from './localize'
+import { localizedManifestLinks, requireLocaleData } from './runtime'
 
 export const contactConfig = computed<ContactConfig>(() => ({
-  eyebrow: localizeText(contactResource.eyebrow),
-  title: localizeText(contactResource.title),
-  description: localizeText(contactResource.description),
-  methods: contactResource.methods.map((method) => ({
-    label: localizeText(method.label),
-    value: method.value,
-    href: method.href,
-    icon: method.icon,
-  })),
+  ...requireLocaleData().contact,
+  methods: localizedManifestLinks.value
+    .filter((link) => link.showInContact)
+    .map((link) => ({
+      label: link.label,
+      value: link.value ?? link.href.replace(/^mailto:/, '').replace(/^https?:\/\//, ''),
+      href: link.href,
+      icon: link.icon,
+    })),
 }))

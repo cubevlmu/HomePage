@@ -2,6 +2,7 @@ export type ProfileInfo = {
   login: string
   displayName: string
   avatar: string
+  showAvatar: boolean
   profileUrl: string
   company: string
   bio: string
