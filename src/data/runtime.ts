@@ -417,7 +417,10 @@ export const requireProjectIndex = () => {
 
 export const locale = readonly(localeState)
 export const availableLocales = computed(() => manifestState.value?.locales ?? [])
-export const projects = readonly(projectsState)
+// Expose a readonly collection without deeply converting every Project field.
+// Consumers cannot replace the array, while presentation components retain the
+// normal Project type instead of Vue's DeepReadonly<Project> wrapper.
+export const projects = computed<readonly Project[]>(() => projectsState.value)
 export const manifestLinks = computed<ManifestLink[]>(() => manifestState.value?.links ?? [])
 export const baseConfig = computed(() => requireBaseData())
 export const displayConfig = computed(() => requireBaseData().display)
