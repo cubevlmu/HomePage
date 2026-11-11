@@ -10,7 +10,7 @@
 ## Before deploying
 
 1. Node.js >= 22.12; run `npm install` from root to install workspace packages.
-2. Set `SITE_ORIGIN=https://your-real-domain.example`. Default in this experiment: `https://cubevlmu.site`.
+2. Set `SITE_ORIGIN=https://your-real-domain.example`. Default in this experiment: `https://flybugs.ink`.
 3. Run `npm run build`.
 4. Confirm `dist/index.html` (personal site), `dist/rhodium/index.html` and `dist/rhodium/en/index.html` contain real content and SEO metadata.
 5. Confirm `dist/sitemap-index.xml`, `dist/robots.txt`, and `dist/project-assets/rhodium-icon.svg` exist.

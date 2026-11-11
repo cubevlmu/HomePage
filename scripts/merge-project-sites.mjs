@@ -19,7 +19,7 @@ for (const entry of projectPaths) {
   await cp(join(from, entry.name), join(to, entry.name), { recursive: true, force: false, errorOnExist: true })
 }
 const robotsPath = join(to, 'robots.txt')
-const origin = (process.env.SITE_ORIGIN || 'https://cubevlmu.site').replace(/\/+$/, '')
+const origin = (process.env.SITE_ORIGIN || 'https://flybugs.ink').replace(/\/+$/, '')
 const robots = ['User-agent: *', 'Allow: /', '', 'Sitemap: ' + origin + '/sitemap-index.xml', ''].join('\n')
 await writeFile(robotsPath, robots, 'utf8')
 const required = ['rhodium/index.html', 'rhodium/en/index.html', 'rhodium/features/index.html', 'rhodium/guide/index.html', 'rhodium/reference/index.html', 'sitemap-index.xml']

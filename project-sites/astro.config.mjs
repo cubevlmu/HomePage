@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 
-const site = (process.env.SITE_ORIGIN || 'https://cubevlmu.site').replace(/\/+$/, '')
+const site = (process.env.SITE_ORIGIN || 'https://flybugs.ink').replace(/\/+$/, '')
 
 export default defineConfig({
   site,

@@ -23,7 +23,7 @@ The legacy personal homepage stays a Vue 3 application at `/`, with legacy proje
 - Static HTML, per-page title/description, self-canonical, Open Graph, Twitter metadata, JSON-LD, bidirectional `hreflang`.
 - `@astrojs/sitemap` writes `sitemap-index.xml` and referenced sub-sitemaps.
 - `robots.txt` generated at build time.
-- Set `SITE_ORIGIN` to the actual, canonical production domain before building. The default is `https://cubevlmu.site`; avoid canonicalizing to a non-deployed hostname.
+- Set `SITE_ORIGIN` to the actual, canonical production domain before building. The default is `https://flybugs.ink`; avoid canonicalizing to a non-deployed hostname.
 - Project content changes require rebuilding the Astro site. Existing Vue `public/data` remains runtime-loaded.
 
 Do not add blanket `noindex` directives, redirect project paths to the Vue SPA, or duplicate the same content on two canonical URLs.

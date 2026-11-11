@@ -11,9 +11,9 @@ interface Props {
 const { project, language, section } = Astro.props
 const copy = project.copy[language]
 const [title, description] = copy.seo[section]
-const canonical = new URL(pathFor(project, language, section), Astro.site).href
-const zh = new URL(pathFor(project, 'zh', section), Astro.site).href
-const en = new URL(pathFor(project, 'en', section), Astro.site).href
+const canonical = new URL(pathFor(project, language, section), Astro.site ?? Astro.url).href
+const zh = new URL(pathFor(project, 'zh', section), Astro.site ?? Astro.url).href
+const en = new URL(pathFor(project, 'en', section), Astro.site ?? Astro.url).href
 const image = 'https://opengraph.githubassets.com/1/AxlumLab/Rhodium'
 const structuredData = JSON.stringify({
   '@context': 'https://schema.org',
