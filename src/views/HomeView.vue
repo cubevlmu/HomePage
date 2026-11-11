@@ -72,6 +72,12 @@ const projectStats = computed(() => {
               <FaIcon :name="link.icon" />
               {{ link.label }}
             </AppLink>
+            <a
+              class="inline-flex items-center gap-2 rounded-xl border border-brand/40 bg-brand/10 px-3 py-2 text-xs font-semibold text-brand-light transition hover:border-brand-light hover:text-white sm:text-sm"
+              :href="siteConfig.language.toLowerCase().startsWith('zh') ? '/rhodium/' : '/rhodium/en/'"
+            >
+              Rhodium · {{ siteConfig.language.toLowerCase().startsWith('zh') ? '项目官网' : 'Project website' }} ↗
+            </a>
           </div>
 
           <dl v-if="projectStats.length" class="mt-4 flex flex-wrap gap-2 border-t border-slate-800 pt-3">

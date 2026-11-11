@@ -1,0 +1,106 @@
+---
+import '../styles/project.css'
+import { pathFor, sections, type Language, type Project, type Section } from '../lib/catalog'
+
+interface Props {
+  project: Project
+  language: Language
+  section: Section
+}
+
+const { project, language, section } = Astro.props
+const copy = project.copy[language]
+const [title, description] = copy.seo[section]
+const canonical = new URL(pathFor(project, language, section), Astro.site).href
+const zh = new URL(pathFor(project, 'zh', section), Astro.site).href
+const en = new URL(pathFor(project, 'en', section), Astro.site).href
+const image = 'https://opengraph.githubassets.com/1/AxlumLab/Rhodium'
+const structuredData = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: project.name,
+  applicationCategory: 'DeveloperApplication',
+  description,
+  url: canonical,
+  codeRepository: project.repository,
+  license: 'https://opensource.org/licenses/MIT',
+  author: { '@type': 'Organization', name: project.owner },
+}).replace(/</g, '\\u003c')
+---
+
+<!doctype html>
+<html lang={copy.locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1018" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-CN" href={zh} />
+    <link rel="alternate" hreflang="en" href={en} />
+    <link rel="alternate" hreflang="x-default" href={zh} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/svg+xml" href="/project-assets/rhodium-icon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rhodium · AxlumLab" />
+    <meta property="og:locale" content={copy.locale === 'zh-CN' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <script type="application/ld+json" set:html={structuredData} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="ambient" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href={pathFor(project, language)} aria-label={project.name}>
+          <span class="brand-symbol" aria-hidden="true">Rh</span>
+          <span class="brand-label">RHODIUM <small>BY AXLUMLAB</small></span>
+        </a>
+        <nav class="desktop-nav" aria-label="Project navigation">
+          {sections.map((item, index) => (
+            <a href={pathFor(project, language, item)} aria-current={section === item ? 'page' : undefined}>{copy.nav[index]}</a>
+          ))}
+        </nav>
+        <div class="header-actions">
+          <a class="lang-link" href={language === 'zh' ? en : zh} hreflang={language === 'zh' ? 'en' : 'zh-CN'}>
+            {language === 'zh' ? 'EN' : '中文'}
+          </a>
+          <a class="github-link" href={project.repository} target="_blank" rel="noopener noreferrer" aria-label="Rhodium on GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.68-3.75-1.32-3.75-1.32-.51-1.3-1.25-1.64-1.25-1.64-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1 .1.9 1.9 1.9 2.32.83.32 1.7.08 2.12-.15.08-.72.39-1.2.71-1.48-2.47-.28-5.06-1.24-5.06-5.49 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.43.11-2.97 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.56 0c2.12-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.69.11 2.97.72.78 1.15 1.78 1.15 3 0 4.26-2.6 5.2-5.08 5.48.4.35.76 1.04.76 2.1v3.11c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/></svg>
+          </a>
+        </div>
+        <details class="mobile-nav">
+          <summary aria-label="Open project navigation"><span></span><span></span><span></span></summary>
+          <nav aria-label="Mobile project navigation">
+            {sections.map((item, index) => (
+              <a href={pathFor(project, language, item)} aria-current={section === item ? 'page' : undefined}>{copy.nav[index]}</a>
+            ))}
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main" class="container page-main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p><span class="tiny-dot"></span>{copy.footer}</p>
+        <div class="footer-links">
+          <a href="/">{copy.back}</a>
+          <a href={project.repository} target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href={project.repository + '/blob/main/docs/INDEX.md'} target="_blank" rel="noopener noreferrer">{copy.docs}</a>
+        </div>
+        <span class="footer-meta">© 2026 AX LUM LAB</span>
+      </div>
+    </footer>
+  </body>
+</html>
