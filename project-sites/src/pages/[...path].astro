@@ -1,0 +1,25 @@
+---
+import ProjectPage from '../components/ProjectPage.astro'
+import { projects, languages, sections, pathFor, type Language, type Section, type Project } from '../lib/catalog'
+
+export function getStaticPaths() {
+  return projects.flatMap((project) =>
+    languages.flatMap((language) =>
+      sections.map((section) => ({
+        params: { path: pathFor(project, language, section).replace(/^\/|\/$/g, '') },
+        props: { project, language, section },
+      })),
+    ),
+  )
+}
+
+interface Props {
+  project: Project
+  language: Language
+  section: Section
+}
+
+const { project, language, section } = Astro.props
+---
+
+<ProjectPage project={project} language={language} section={section} />

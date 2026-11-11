@@ -16,8 +16,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "build": "npm run build:homepage && npm run build:projects && node scripts/merge-project-sites.mjs",
+    "preview": "vite preview",
+    "build:homepage": "vue-tsc --noEmit && vite build",
+    "build:projects": "npm run build --workspace @homepage/project-sites",
+    "dev:projects": "npm run dev --workspace @homepage/project-sites"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
@@ -37,5 +40,8 @@
     "vue": "^3.5.30",
     "vue-router": "^5.0.3",
     "vue-tsc": "^3.2.5"
-  }
+  },
+  "workspaces": [
+    "project-sites"
+  ]
 }

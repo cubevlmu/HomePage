@@ -1,0 +1,17 @@
+{
+  "name": "@homepage/project-sites",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^6.0.0",
+    "@astrojs/sitemap": "^3.7.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
